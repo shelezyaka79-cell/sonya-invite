@@ -468,7 +468,8 @@ function disableMusic(fromGuest=false){
 }
 musicButton.addEventListener('click',()=>musicEnabled?disableMusic(true):enableMusic(true));
 backgroundMusic.addEventListener('error',()=>{if(musicEnabled&&musicBackend==='track')startSynthesis()});
-function beginMusicOnFirstInvitationAction(){if(!musicChoiceMade&&!musicEnabled)enableMusic()}
+backgroundMusic.addEventListener('canplay',()=>{if(musicEnabled&&!videoIsPlaying()){backgroundMusic.volume=.10;backgroundMusic.play().then(()=>{stopSynthesis();musicBackend='track'}).catch(()=>{})}});
+function beginMusicOnFirstInvitationAction(){if(musicEnabled){if(backgroundMusic.readyState>=2&&!videoIsPlaying()){backgroundMusic.volume=.10;backgroundMusic.play().then(()=>{stopSynthesis();musicBackend='track'}).catch(()=>startSynthesis())}else if(!videoIsPlaying())startSynthesis()}else if(!musicChoiceMade)enableMusic()}
 function suspendMusicForVideo(){
   backgroundMusic.pause();
   if(soundMaster&&soundContext)soundMaster.gain.setTargetAtTime(.0001,soundContext.currentTime,.06);
