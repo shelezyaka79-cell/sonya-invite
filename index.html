@@ -454,6 +454,8 @@ function haltMusic(){
 function enableMusic(fromGuest=false){
   if(fromGuest)musicChoiceMade=true;
   musicEnabled=true;updateMusicButton();
+  // Unlock the synthesizer in the original tap gesture, for reliable fallback on mobile browsers.
+  if(webAudioFactory&&!soundContext){try{soundContext=new webAudioFactory();soundMaster=soundContext.createGain();soundMaster.gain.value=.0001;soundMaster.connect(soundContext.destination);soundContext.resume().catch(()=>{})}catch(e){soundContext=null;soundMaster=null}}
   if(videoIsPlaying())return;
   if(backgroundMusic.readyState>=2){
     musicBackend='track';backgroundMusic.volume=.105;
@@ -465,6 +467,7 @@ function disableMusic(fromGuest=false){
   if(fromGuest)musicChoiceMade=true;musicEnabled=false;haltMusic()
 }
 musicButton.addEventListener('click',()=>musicEnabled?disableMusic(true):enableMusic(true));
+backgroundMusic.addEventListener('error',()=>{if(musicEnabled&&musicBackend==='track')startSynthesis()});
 function beginMusicOnFirstInvitationAction(){if(!musicChoiceMade&&!musicEnabled)enableMusic()}
 function suspendMusicForVideo(){
   backgroundMusic.pause();
