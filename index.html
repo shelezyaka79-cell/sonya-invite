@@ -90,8 +90,41 @@
 @media(min-width:760px){#album .photo-box{max-width:340px}#album .topline{padding-top:20px}}
 @media(max-height:700px){#album .photo-box{width:min(250px,62vw)}#album .album-title{font-size:44px}.photo-frame{aspect-ratio:1}#album{padding-bottom:10px}}
 @media(prefers-reduced-motion:reduce){.magical-world svg,.magical-world .mist,.news-body::after,.gift-icon{animation:none!important}.opening .portal-door{transition-duration:.05ms!important}}
+
+/* V5.1 — reliable mobile motion, readable gift, opt-in music */
+:root{--music-cream:#f4e3c0}
+.scene.active{animation:sceneFadeStable .36s ease-out both;transform:none!important;filter:none!important}
+@keyframes sceneFadeStable{from{opacity:0}to{opacity:1}}
+#portal{contain:layout paint;isolation:isolate;background:#101a2c}
+#portal .portal-stage{isolation:isolate;overflow:visible;backface-visibility:hidden;transform:translateZ(0)}
+#portal .conservatory{will-change:transform;backface-visibility:hidden;transform:translate3d(0,0,0);transition:transform 1.65s var(--ease);filter:drop-shadow(0 14px 27px #e2b67945)}
+#portal.opening .conservatory{transform:translate3d(0,4px,0) scale(1.15);filter:drop-shadow(0 14px 27px #e2b67945)}
+#portal .portal-stage::before,#portal .portal-stage::after{animation:none!important;display:none!important}
+#portal .portal-glow{filter:blur(9px);transition:opacity 1.25s ease}
+#portal .magical-world svg,#portal .magical-world .mist{animation-play-state:paused}
+#portal .victorian-frame{opacity:.42}
+.portal-transition-veil{position:absolute;inset:0;z-index:15;background:radial-gradient(ellipse at 50% 47%,#fff1d7 0%,#e7c690 28%,#a47c6b 70%,#3d3951 100%);opacity:0;pointer-events:none;transition:opacity .3s ease-out}
+#portal.finish-opening .portal-transition-veil{opacity:1}
+#portal .portal-door{backface-visibility:hidden;will-change:transform}
+#portal .opening .left-door,#portal .opening .right-door{transform-style:flat}
+.music-toggle{position:fixed;z-index:100;right:15px;top:calc(78px + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:center;gap:7px;min-width:96px;min-height:36px;padding:8px 12px;border-radius:99px;border:1px solid #efcf9688;background:#241c31e8;color:var(--music-cream);box-shadow:0 8px 25px #0005;backdrop-filter:blur(6px);font:700 11px/1 Manrope,system-ui,sans-serif;letter-spacing:.02em;transition:background .24s ease,border-color .24s ease}
+.music-toggle[aria-pressed="true"]{background:#f3d4a5;color:#302237;border-color:#fff1d7}
+.music-toggle .music-glyph{font-size:16px;line-height:1}
+.music-toggle[disabled]{opacity:.6;cursor:default}
+.music-toggle:focus-visible{outline:3px solid #fbe6b2;outline-offset:3px}
+.music-note{position:relative;font-size:11px;color:#e8d6c5;line-height:1.3;max-width:330px;text-align:center;margin:10px auto 0}
+#ticket .gift-button{position:relative;display:flex;align-items:center;gap:6px;width:100%;margin:26px auto 0;padding:18px 11px 20px;border-radius:9px;border:2px solid #d8aa69;color:#fff2d6;background:linear-gradient(145deg,#654054,#38243b 85%);box-shadow:0 11px 25px #5b38573f, inset 0 0 0 1px #f0d19a66;transition:transform .3s ease,box-shadow .3s ease}
+#ticket .gift-button:hover{background:linear-gradient(145deg,#775365,#38243b 90%);box-shadow:0 13px 29px #5b38576b}
+#ticket .gift-button strong{font:600 clamp(25px,6vw,33px)/.99 'Cormorant Garamond',Georgia,serif;color:#fff0d4;letter-spacing:-.015em;text-align:center}
+#ticket .gift-button small{font:700 11px/1.6 Manrope,system-ui,sans-serif;color:#f0cdad;text-align:center}
+#ticket .gift-icon{font-size:34px;line-height:1;filter:drop-shadow(0 0 9px #f5c48b90);animation:float 3s ease-in-out infinite alternate}
+#ticket .gift-button:after{content:'✧';position:absolute;right:12px;top:10px;color:#f0c47d;opacity:.7}
+@media(max-width:360px){.music-toggle{right:9px;top:calc(72px + env(safe-area-inset-top,0px));min-width:85px;font-size:10px;padding:7px}}
+@media(prefers-reduced-motion:reduce){#portal .conservatory,#portal .portal-transition-veil,#portal .portal-door{transition-duration:.01ms!important}#ticket .gift-icon{animation:none}}
 </style></head><body>
 <div id="stars" aria-hidden="true"></div>
+<button id="musicToggle" class="music-toggle" aria-label="Включить или выключить музыку" aria-pressed="false" type="button"><span class="music-glyph">♫</span><span id="musicLabel">♪ Музыка</span></button>
+<audio id="backgroundMusic" src="https://archive.org/download/Ondrosik-Free-music-catalog/Enchanted%20Valley.mp3" loop preload="auto" playsinline></audio>
 <main>
 <section id="news" class="scene active" aria-label="Срочные новости"><div class="magical-world" aria-hidden="true">
 <svg viewBox="0 0 430 860" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -242,7 +275,7 @@
 <!-- the magical light behind opening doors -->
 <ellipse class="portal-glow" cx="285" cy="353" rx="84" ry="116" fill="#ffdea3" opacity=".03" filter="url(#softglow)"/>
 </svg></div>
-<div class="open-wrap"><button class="open-door" id="openDoor">✦ Открыть двери купола ✦</button><p class="tiny">Нажми — створки распахнутся, и ты попадёшь в праздник</p></div>
+<div class="portal-transition-veil" aria-hidden="true"></div><div class="open-wrap"><button class="open-door" id="openDoor">✦ Открыть двери купола ✦</button><p class="tiny">Нажми — створки распахнутся, и ты попадёшь в праздник</p></div>
 </section>
 <section id="videoScene" class="scene" aria-label="Видеообращение Сони"><div class="magical-world" aria-hidden="true">
 <svg viewBox="0 0 430 860" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -314,7 +347,7 @@
 <div class="ticket-actions"><button class="yes" id="reply">♥ Я приду!</button><button id="calendar">▤ В календарь</button><a href="https://yandex.ru/maps/?rtext=~56.865841%2C53.166191&rtt=auto" target="_blank" rel="noopener noreferrer">⌖ Маршрут</a></div>
 <details class="mapfold"><summary>Посмотреть место на карте ▾</summary><iframe title="Комплекс Ботаника на карте" loading="lazy" src="https://yandex.ru/map-widget/v1/?ll=53.166191%2C56.865841&z=16&pt=53.166191%2C56.865841%2Cpm2rdm"></iframe><a href="https://yandex.ru/maps/?rtext=~56.865841%2C53.166191&rtt=auto" target="_blank" rel="noopener noreferrer">Открыть Яндекс Карты ↗</a></details>
 <div class="ticket-signature">Обнимаю, Соня ♡</div>
-<button class="gift-button" id="openGift" type="button"><span class="gift-icon">✉</span><strong>Секретный подарок от Сони</strong><small>Для тех, кто открыл золотой билет · жми!</small></button><div class="feedback" id="feedback" role="status" aria-live="polite"></div><div class="ticket-tail">Один билет · на встречу самых любимых людей</div>
+<button class="gift-button" id="openGift" type="button"><span class="gift-icon">✉</span><strong>Открыть секретный подарок от Сони</strong><small>Подарок внутри: 6 секретных фотографий · нажми здесь ✦</small></button><div class="feedback" id="feedback" role="status" aria-live="polite"></div><div class="ticket-tail">Один билет · на встречу самых любимых людей</div>
 </div><div class="ticket-bottom"><button id="replay">Пересмотреть волшебство сначала ↺</button></div></div>
 </section><section id="album" class="scene" aria-label="Секретный фотоальбом Сони"><div class="magical-world" aria-hidden="true">
 <svg viewBox="0 0 430 860" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -354,12 +387,107 @@
 <script>
 (()=>{
 const scenes=['news','portal','videoScene','ticket','album'];let current='news',isOpening=false;
+
+/* Gentle background score: CC0 Enchanted Valley with an original browser-played celesta fallback */
+const musicButton=document.getElementById('musicToggle');
+const musicLabel=document.getElementById('musicLabel');
+const backgroundMusic=document.getElementById('backgroundMusic');
+const webAudioFactory=window.AudioContext||window.webkitAudioContext;
+let musicEnabled=false, musicChoiceMade=false, musicBackend='', soundContext=null, soundMaster=null, soundTimer=null, soundStep=0;
+const sonyaVideoElement=document.getElementById('sonyaVideo');
+const magicNotes=[76,79,81,79,76,74,72,74,76,79,83,81,79,76,74,72,
+  74,77,79,77,74,72,69,72,74,77,81,79,77,74,72,69];
+const magicChords=[[57,60,64],[53,57,60],[55,59,62],[52,55,59]];
+function videoIsPlaying(){return sonyaVideoElement&&!sonyaVideoElement.paused&&!sonyaVideoElement.ended}
+function updateMusicButton(){
+  musicButton.setAttribute('aria-pressed',String(musicEnabled));
+  musicLabel.textContent=musicEnabled?'Музыка: вкл':'♪ Музыка';
+  musicButton.title=musicEnabled?'Выключить фоновую музыку':'Включить фоновую музыку';
+}
+function bellTone(midi,t,duration,volume=.1){
+  if(!soundContext||!soundMaster)return;
+  const hz=440*Math.pow(2,(midi-69)/12);
+  for(const [type,multi,amp] of [['sine',1,1],['triangle',2,.12],['sine',3,.045]]){
+    const osc=soundContext.createOscillator(),env=soundContext.createGain();
+    osc.type=type;osc.frequency.setValueAtTime(hz*multi,t);
+    env.gain.setValueAtTime(.0001,t);
+    env.gain.exponentialRampToValueAtTime(Math.max(.0002,volume*amp),t+.018);
+    env.gain.exponentialRampToValueAtTime(.0001,t+duration);
+    osc.connect(env);env.connect(soundMaster);osc.start(t);osc.stop(t+duration+.04);
+  }
+}
+function warmChord(notes,t){
+  if(!soundContext||!soundMaster)return;
+  notes.forEach((m,i)=>{
+    const o=soundContext.createOscillator(),g=soundContext.createGain();
+    o.type='sine';o.frequency.value=440*Math.pow(2,(m-69)/12);
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.linearRampToValueAtTime(.018,t+.3);
+    g.gain.exponentialRampToValueAtTime(.0001,t+2.7);
+    o.connect(g);g.connect(soundMaster);o.start(t);o.stop(t+2.76);
+  });
+}
+function renderMusicStep(){
+  if(!musicEnabled||!soundContext||!soundMaster||videoIsPlaying()||document.hidden)return;
+  const t=soundContext.currentTime+.06,s=soundStep++;
+  const note=magicNotes[s%magicNotes.length];
+  bellTone(note,t,.82,s%2===0?.09:.058);
+  if(s%8===0)warmChord(magicChords[Math.floor(s/8)%4],t);
+  if(s%8===4)bellTone(note-12,t,1.35,.035);
+}
+function stopSynthesis(){
+  if(soundTimer!==null){clearInterval(soundTimer);soundTimer=null}
+  if(soundMaster&&soundContext){soundMaster.gain.setTargetAtTime(.0001,soundContext.currentTime,.08)}
+}
+function startSynthesis(){
+  if(!webAudioFactory){musicLabel.textContent='Звук недоступен';musicEnabled=false;updateMusicButton();return}
+  if(!soundContext){soundContext=new webAudioFactory();soundMaster=soundContext.createGain();soundMaster.gain.value=.0001;soundMaster.connect(soundContext.destination)}
+  soundContext.resume().catch(()=>{});
+  if(soundTimer!==null)clearInterval(soundTimer);
+  soundMaster.gain.setTargetAtTime(.22,soundContext.currentTime,.22);
+  soundStep=0;renderMusicStep();soundTimer=setInterval(renderMusicStep,375);
+  musicBackend='synth';
+}
+function haltMusic(){
+  backgroundMusic.pause();stopSynthesis();musicBackend='';updateMusicButton()
+}
+function enableMusic(fromGuest=false){
+  if(fromGuest)musicChoiceMade=true;
+  musicEnabled=true;updateMusicButton();
+  if(videoIsPlaying())return;
+  if(backgroundMusic.readyState>=2){
+    musicBackend='track';backgroundMusic.volume=.105;
+    const playResult=backgroundMusic.play();
+    if(playResult&&typeof playResult.catch==='function')playResult.catch(()=>{if(musicEnabled&&musicBackend==='track')startSynthesis()});
+  } else startSynthesis();
+}
+function disableMusic(fromGuest=false){
+  if(fromGuest)musicChoiceMade=true;musicEnabled=false;haltMusic()
+}
+musicButton.addEventListener('click',()=>musicEnabled?disableMusic(true):enableMusic(true));
+function beginMusicOnFirstInvitationAction(){if(!musicChoiceMade&&!musicEnabled)enableMusic()}
+function suspendMusicForVideo(){
+  backgroundMusic.pause();
+  if(soundMaster&&soundContext)soundMaster.gain.setTargetAtTime(.0001,soundContext.currentTime,.06);
+}
+function resumeMusicAfterVideo(){
+  if(!musicEnabled||document.hidden||videoIsPlaying())return;
+  if(musicBackend==='track'){backgroundMusic.volume=.105;backgroundMusic.play().catch(()=>startSynthesis())}
+  else if(musicBackend==='synth'&&soundMaster&&soundContext)soundMaster.gain.setTargetAtTime(.22,soundContext.currentTime,.25);
+}
+sonyaVideoElement.addEventListener('play',suspendMusicForVideo);
+sonyaVideoElement.addEventListener('playing',suspendMusicForVideo);
+sonyaVideoElement.addEventListener('pause',resumeMusicAfterVideo);
+sonyaVideoElement.addEventListener('ended',resumeMusicAfterVideo);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)suspendMusicForVideo();else resumeMusicAfterVideo()});
+updateMusicButton();
+
 const starLayer=document.getElementById('stars');for(let i=0;i<34;i++){const t=document.createElement('span');t.className='star';t.style.left=((i*73+17)%100)+'%';t.style.top=((i*43+7)%100)+'%';t.style.setProperty('--time',(5+(i%7)*1.4)+'s');t.style.setProperty('--delay',(-i*.7)+'s');starLayer.appendChild(t)}
 function show(id){if(!scenes.includes(id))return;const v=document.getElementById('sonyaVideo');if(id!=='videoScene'&&v&&!v.paused)v.pause();document.getElementById(current).classList.remove('active');document.getElementById(id).classList.add('active');current=id;window.scrollTo(0,0)}
-document.getElementById('toPortal').addEventListener('click',()=>show('portal'));
+document.getElementById('toPortal').addEventListener('click',()=>{beginMusicOnFirstInvitationAction();show('portal')});
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.back)));
 document.getElementById('openDoor').addEventListener('click',openDoors);document.getElementById('portalStage').addEventListener('click',openDoors);
-function openDoors(){if(isOpening)return;isOpening=true;const p=document.getElementById('portal');p.classList.add('opening');window.setTimeout(()=>{show('videoScene');p.classList.remove('opening');isOpening=false;checkVideo()},1900)}
+function openDoors(){if(isOpening)return;isOpening=true;const p=document.getElementById('portal');p.classList.remove('finish-opening');p.classList.add('opening');window.setTimeout(()=>p.classList.add('finish-opening'),1680);window.setTimeout(()=>{show('videoScene');p.classList.remove('opening','finish-opening');isOpening=false;checkVideo()},2090)}
 function checkVideo(){const v=document.getElementById('sonyaVideo'),place=document.getElementById('videoPlaceholder');place.hidden=true;v.hidden=false;v.load()}
 const sonyaVideo=document.getElementById('sonyaVideo');
 sonyaVideo.addEventListener('error',()=>{const p=document.getElementById('videoPlaceholder');p.hidden=false;sonyaVideo.hidden=true;p.innerHTML='Видео временно недоступно<br><small style="font:12px Manrope,sans-serif">Открой ролик по прямой ссылке ниже</small>'});
