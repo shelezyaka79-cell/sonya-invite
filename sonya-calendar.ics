@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sonya Magical Invite//RU
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:sonya8-20261103-botanika2@shelezyaka79-cell.github.io
+DTSTAMP:20261101T094300Z
+DTSTART:20261103T130000Z
+DTEND:20261103T170000Z
+SUMMARY:День рождения Сони — 8 лет
+DESCRIPTION:Соня приглашает тебя на свой день рождения!
+LOCATION:Ижевск\, ул. Кирова\, 10Б\, гостевой дом Ботаника № 2
+END:VEVENT
+END:VCALENDAR

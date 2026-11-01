@@ -121,6 +121,29 @@
 #ticket .gift-button:after{content:'✧';position:absolute;right:12px;top:10px;color:#f0c47d;opacity:.7}
 @media(max-width:360px){.music-toggle{right:9px;top:calc(72px + env(safe-area-inset-top,0px));min-width:85px;font-size:10px;padding:7px}}
 @media(prefers-reduced-motion:reduce){#portal .conservatory,#portal .portal-transition-veil,#portal .portal-door{transition-duration:.01ms!important}#ticket .gift-icon{animation:none}}
+
+/* iPhone & WKWebView usability and performance */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden}
+.topline{padding-top:max(19px,calc(12px + env(safe-area-inset-top,0px)))}
+#videoScene .video-controls,#portal .open-wrap,#album{padding-bottom:max(24px,calc(10px + env(safe-area-inset-bottom,0px)))}
+#ticket{padding-bottom:max(38px,calc(18px + env(safe-area-inset-bottom,0px)))}
+.ios-calendar-link{display:none;margin:7px auto 17px;text-align:center;color:#6b4b5d;font:800 12px/1.4 Manrope,system-ui,sans-serif;text-decoration:underline;text-underline-offset:4px}
+.ios-client .ios-calendar-link{display:block}
+.ios-client #portal .conservatory{filter:none!important}
+.ios-client #portal .magical-world .mist{filter:none!important}
+.ios-client .music-toggle{-webkit-backdrop-filter:none;backdrop-filter:none;background:#241c31f5}
+.ios-client .portal-door{-webkit-backface-visibility:hidden;backface-visibility:hidden;transform-box:fill-box}
+@supports(-webkit-touch-callout:none){
+ .music-toggle{top:calc(72px + env(safe-area-inset-top,0px))}
+ .scene{min-height:100svh}
+}
+@media(max-width:380px){
+ .ios-client .topline{padding-left:14px;padding-right:14px}
+ .ios-client .crest-meta{font-size:8px}
+ .ios-client #portal .portal-title{font-size:clamp(35px,10vw,44px)}
+ .ios-client .video-frame{width:min(250px,64vw)}
+}
 </style></head><body>
 <div id="stars" aria-hidden="true"></div>
 <button id="musicToggle" class="music-toggle" aria-label="Включить или выключить музыку" aria-pressed="false" type="button"><span class="music-glyph">♫</span><span id="musicLabel">♪ Музыка</span></button>
@@ -304,7 +327,7 @@
 <div class="mist one"></div><div class="mist two"></div></div>
 <div class="scenery"></div><header class="topline"><button class="back" data-back="portal">← Назад</button><span class="kicker">Глава II · Самое важное</span></header>
 <div class="video-head"><div class="kicker">Личное послание</div><h2 class="serif">А теперь —<br>слово Соне.</h2><p>Настоящее видеоприглашение от самой Сони. Нажми на воспроизведение, чтобы услышать её.</p></div>
-<div class="video-frame" id="videoFrame"><div class="video-placeholder" id="videoPlaceholder">Видео Сони<br><small style="font-size:13px;font-family:Manrope,sans-serif">Файл пока подключается к сайту</small></div><video id="sonyaVideo" controls playsinline preload="metadata" hidden><source src="./assets/sonya.mp4" type="video/mp4"></video></div>
+<div class="video-frame" id="videoFrame"><div class="video-placeholder" id="videoPlaceholder">Видео Сони<br><small style="font-size:13px;font-family:Manrope,sans-serif">Файл пока подключается к сайту</small></div><video id="sonyaVideo" controls playsinline webkit-playsinline preload="metadata" hidden><source src="./assets/sonya.mp4" type="video/mp4"></video></div>
 <div class="video-controls"><a class="video-direct" href="https://raw.githubusercontent.com/shelezyaka79-cell/sonya-invite/main/assets/sonya.mp4" target="_blank" rel="noopener">Если видео не открылось — смотреть напрямую ↗</a><button class="main-btn" id="toTicket"><span>Получить золотой билет</span><span class="arrow">✦</span></button><p class="video-note">Слушать звук можно по нажатию. Продолжить к билету можно в любой момент.</p></div>
 </section>
 <section id="ticket" class="scene" aria-label="Золотой билет на день рождения"><div class="sealed-envelope" id="envelopeOverlay" aria-label="Запечатанное письмо от Сони">
@@ -346,7 +369,7 @@
 <figure class="venue-photo"><img src="https://static.tildacdn.com/tild3365-6138-4461-b631-333636663531/__2.jpg" alt="Фотография гостевого комплекса Ботаника" loading="lazy"></figure>
 <div class="ticket-actions"><button class="yes" id="reply">♥ Я приду!</button><button id="calendar">▤ В календарь</button><a href="https://yandex.ru/maps/?rtext=~56.865841%2C53.166191&rtt=auto" target="_blank" rel="noopener noreferrer">⌖ Маршрут</a></div>
 <details class="mapfold"><summary>Посмотреть место на карте ▾</summary><iframe title="Комплекс Ботаника на карте" loading="lazy" src="https://yandex.ru/map-widget/v1/?ll=53.166191%2C56.865841&z=16&pt=53.166191%2C56.865841%2Cpm2rdm"></iframe><a href="https://yandex.ru/maps/?rtext=~56.865841%2C53.166191&rtt=auto" target="_blank" rel="noopener noreferrer">Открыть Яндекс Карты ↗</a></details>
-<div class="ticket-signature">Обнимаю, Соня ♡</div>
+<a class="ios-calendar-link" href="./sonya-calendar.ics" target="_blank" rel="noopener"> Для iPhone: добавить в календарь ↗</a><div class="ticket-signature">Обнимаю, Соня ♡</div>
 <button class="gift-button" id="openGift" type="button"><span class="gift-icon">✉</span><strong>Открыть секретный подарок от Сони</strong><small>Подарок внутри: 6 секретных фотографий · нажми здесь ✦</small></button><div class="feedback" id="feedback" role="status" aria-live="polite"></div><div class="ticket-tail">Один билет · на встречу самых любимых людей</div>
 </div><div class="ticket-bottom"><button id="replay">Пересмотреть волшебство сначала ↺</button></div></div>
 </section><section id="album" class="scene" aria-label="Секретный фотоальбом Сони"><div class="magical-world" aria-hidden="true">
@@ -388,107 +411,113 @@
 (()=>{
 const scenes=['news','portal','videoScene','ticket','album'];let current='news',isOpening=false;
 
-/* Gentle background score: CC0 Enchanted Valley with an original browser-played celesta fallback */
+/* Safari-aware player for the user's complete enchanted-fairytale recording.
+   iOS requires user interaction for audible audio and ignores HTMLMediaElement.volume.
+   An AudioContext GainNode keeps the music at 10% after the first tap. */
 const musicButton=document.getElementById('musicToggle');
 const musicLabel=document.getElementById('musicLabel');
 const backgroundMusic=document.getElementById('backgroundMusic');
-const webAudioFactory=window.AudioContext||window.webkitAudioContext;
-let musicEnabled=false, musicChoiceMade=false, musicBackend='', soundContext=null, soundMaster=null, soundTimer=null, soundStep=0;
 const sonyaVideoElement=document.getElementById('sonyaVideo');
-const magicNotes=[76,79,81,79,76,74,72,74,76,79,83,81,79,76,74,72,
-  74,77,79,77,74,72,69,72,74,77,81,79,77,74,72,69];
-const magicChords=[[57,60,64],[53,57,60],[55,59,62],[52,55,59]];
-function videoIsPlaying(){return sonyaVideoElement&&!sonyaVideoElement.paused&&!sonyaVideoElement.ended}
+const AudioCtor=window.AudioContext||window.webkitAudioContext;
+const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||
+ (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+if(isIOS)document.documentElement.classList.add('ios-client');
+let musicEnabled=true, musicContext=null, musicGain=null, musicRouteReady=false;
+backgroundMusic.volume=.10;
+function videoIsPlaying(){
+ return sonyaVideoElement&&!sonyaVideoElement.paused&&!sonyaVideoElement.ended;
+}
+function musicReallyPlaying(){
+ return musicEnabled&&!backgroundMusic.paused&&!videoIsPlaying()&&
+ (!musicRouteReady||musicContext.state==='running')&&!document.hidden;
+}
 function updateMusicButton(){
-  musicButton.setAttribute('aria-pressed',String(musicEnabled));
-  musicLabel.textContent=musicEnabled?'Музыка: вкл':'♪ Музыка';
-  musicButton.title=musicEnabled?'Выключить фоновую музыку':'Включить фоновую музыку';
+ const playing=musicReallyPlaying();
+ musicButton.setAttribute('aria-pressed',String(playing));
+ musicLabel.textContent=playing?'♫ Выкл.':musicEnabled?'♫ Включить':'♪ Музыка';
+ musicButton.title=playing?'Отключить фоновую музыку':'Включить музыку Сони';
 }
-function bellTone(midi,t,duration,volume=.1){
-  if(!soundContext||!soundMaster)return;
-  const hz=440*Math.pow(2,(midi-69)/12);
-  for(const [type,multi,amp] of [['sine',1,1],['triangle',2,.12],['sine',3,.045]]){
-    const osc=soundContext.createOscillator(),env=soundContext.createGain();
-    osc.type=type;osc.frequency.setValueAtTime(hz*multi,t);
-    env.gain.setValueAtTime(.0001,t);
-    env.gain.exponentialRampToValueAtTime(Math.max(.0002,volume*amp),t+.018);
-    env.gain.exponentialRampToValueAtTime(.0001,t+duration);
-    osc.connect(env);env.connect(soundMaster);osc.start(t);osc.stop(t+duration+.04);
-  }
+function prepareQuietAudio(){
+ if(musicRouteReady||!AudioCtor)return;
+ try{
+   if(!musicContext)musicContext=new AudioCtor();
+   const source=musicContext.createMediaElementSource(backgroundMusic);
+   musicGain=musicContext.createGain();
+   musicGain.gain.value=.10;
+   source.connect(musicGain);
+   musicGain.connect(musicContext.destination);
+   backgroundMusic.volume=1;
+   musicRouteReady=true;
+ }catch(err){
+   /* Keep standard HTML audio if routing is unavailable; no silent fake soundtrack. */
+   musicRouteReady=false;
+   backgroundMusic.volume=.10;
+ }
 }
-function warmChord(notes,t){
-  if(!soundContext||!soundMaster)return;
-  notes.forEach((m,i)=>{
-    const o=soundContext.createOscillator(),g=soundContext.createGain();
-    o.type='sine';o.frequency.value=440*Math.pow(2,(m-69)/12);
-    g.gain.setValueAtTime(.0001,t);
-    g.gain.linearRampToValueAtTime(.018,t+.3);
-    g.gain.exponentialRampToValueAtTime(.0001,t+2.7);
-    o.connect(g);g.connect(soundMaster);o.start(t);o.stop(t+2.76);
-  });
+function attemptMusic(fromGesture){
+ if(!musicEnabled||videoIsPlaying()||document.hidden)return;
+ if(fromGesture){
+   prepareQuietAudio();
+   if(musicContext&&musicContext.state!=='running')
+     musicContext.resume().catch(()=>updateMusicButton());
+ }
+ if(isIOS&&!fromGesture&&!musicRouteReady){
+   /* iPhone Safari does not allow sound before a user gesture. */
+   updateMusicButton();return;
+ }
+ let promise;
+ try{promise=backgroundMusic.play()}catch(e){updateMusicButton();return}
+ if(promise&&typeof promise.then==='function'){
+   promise.then(()=>{
+     if(!musicEnabled||videoIsPlaying()||document.hidden)backgroundMusic.pause();
+     updateMusicButton();
+   }).catch(()=>updateMusicButton());
+ }else updateMusicButton();
 }
-function renderMusicStep(){
-  if(!musicEnabled||!soundContext||!soundMaster||videoIsPlaying()||document.hidden)return;
-  const t=soundContext.currentTime+.06,s=soundStep++;
-  const note=magicNotes[s%magicNotes.length];
-  bellTone(note,t,.82,s%2===0?.09:.058);
-  if(s%8===0)warmChord(magicChords[Math.floor(s/8)%4],t);
-  if(s%8===4)bellTone(note-12,t,1.35,.035);
+function disableMusic(){
+ musicEnabled=false;
+ backgroundMusic.pause();
+ updateMusicButton();
 }
-function stopSynthesis(){
-  if(soundTimer!==null){clearInterval(soundTimer);soundTimer=null}
-  if(soundMaster&&soundContext){soundMaster.gain.setTargetAtTime(.0001,soundContext.currentTime,.08)}
+function enableMusic(){
+ musicEnabled=true;
+ attemptMusic(true);
 }
-function startSynthesis(){
-  if(!webAudioFactory){musicLabel.textContent='Звук недоступен';musicEnabled=false;updateMusicButton();return}
-  if(!soundContext){soundContext=new webAudioFactory();soundMaster=soundContext.createGain();soundMaster.gain.value=.0001;soundMaster.connect(soundContext.destination)}
-  soundContext.resume().catch(()=>{});
-  if(soundTimer!==null)clearInterval(soundTimer);
-  soundMaster.gain.setTargetAtTime(.22,soundContext.currentTime,.22);
-  soundStep=0;renderMusicStep();soundTimer=setInterval(renderMusicStep,375);
-  musicBackend='synth';
+function beginMusicOnFirstInvitationAction(){
+ if(musicEnabled&&!musicReallyPlaying())attemptMusic(true);
 }
-function haltMusic(){
-  backgroundMusic.pause();stopSynthesis();musicBackend='';updateMusicButton()
-}
-function enableMusic(fromGuest=false){
-  if(fromGuest)musicChoiceMade=true;
-  musicEnabled=true;updateMusicButton();
-  // Unlock the synthesizer in the original tap gesture, for reliable fallback on mobile browsers.
-  if(webAudioFactory&&!soundContext){try{soundContext=new webAudioFactory();soundMaster=soundContext.createGain();soundMaster.gain.value=.0001;soundMaster.connect(soundContext.destination);soundContext.resume().catch(()=>{})}catch(e){soundContext=null;soundMaster=null}}
-  if(videoIsPlaying())return;
-  if(backgroundMusic.readyState>=2){
-    musicBackend='track';backgroundMusic.volume=.10;
-    const playResult=backgroundMusic.play();
-    if(playResult&&typeof playResult.catch==='function')playResult.catch(()=>{if(musicEnabled&&musicBackend==='track')startSynthesis()});
-  } else startSynthesis();
-}
-function disableMusic(fromGuest=false){
-  if(fromGuest)musicChoiceMade=true;musicEnabled=false;haltMusic()
-}
-musicButton.addEventListener('click',()=>musicEnabled?disableMusic(true):enableMusic(true));
-backgroundMusic.addEventListener('error',()=>{if(musicEnabled&&musicBackend==='track')startSynthesis()});
-backgroundMusic.addEventListener('canplay',()=>{if(musicEnabled&&!videoIsPlaying()){backgroundMusic.volume=.10;backgroundMusic.play().then(()=>{stopSynthesis();musicBackend='track'}).catch(()=>{})}});
-function beginMusicOnFirstInvitationAction(){if(musicEnabled){if(backgroundMusic.readyState>=2&&!videoIsPlaying()){backgroundMusic.volume=.10;backgroundMusic.play().then(()=>{stopSynthesis();musicBackend='track'}).catch(()=>startSynthesis())}else if(!videoIsPlaying())startSynthesis()}else if(!musicChoiceMade)enableMusic()}
 function suspendMusicForVideo(){
-  backgroundMusic.pause();
-  if(soundMaster&&soundContext)soundMaster.gain.setTargetAtTime(.0001,soundContext.currentTime,.06);
+ backgroundMusic.pause();
+ updateMusicButton();
 }
 function resumeMusicAfterVideo(){
-  if(!musicEnabled||document.hidden||videoIsPlaying())return;
-  if(musicBackend==='track'){backgroundMusic.volume=.10;backgroundMusic.play().catch(()=>startSynthesis())}
-  else if(musicBackend==='synth'&&soundMaster&&soundContext)soundMaster.gain.setTargetAtTime(.22,soundContext.currentTime,.25);
+ if(musicEnabled&&!document.hidden&&!videoIsPlaying())attemptMusic(false);
 }
+musicButton.addEventListener('click',()=>{
+ if(musicReallyPlaying())disableMusic();
+ else enableMusic();
+});
+document.addEventListener('click',e=>{
+ if(!musicEnabled||musicReallyPlaying()||videoIsPlaying())return;
+ if(e.target.closest&&e.target.closest('#musicToggle,video,.video-frame'))return;
+ attemptMusic(true);
+},true);
+backgroundMusic.addEventListener('playing',updateMusicButton);
+backgroundMusic.addEventListener('pause',updateMusicButton);
+backgroundMusic.addEventListener('error',updateMusicButton);
 sonyaVideoElement.addEventListener('play',suspendMusicForVideo);
 sonyaVideoElement.addEventListener('playing',suspendMusicForVideo);
 sonyaVideoElement.addEventListener('pause',resumeMusicAfterVideo);
 sonyaVideoElement.addEventListener('ended',resumeMusicAfterVideo);
-document.addEventListener('visibilitychange',()=>{if(document.hidden)suspendMusicForVideo();else resumeMusicAfterVideo()});
+document.addEventListener('visibilitychange',()=>{
+ if(document.hidden)backgroundMusic.pause();
+ else if(musicEnabled)attemptMusic(false);
+ updateMusicButton();
+});
 updateMusicButton();
-// Attempt playback on opening; browsers that block sound will unlock on the first tap.
-try{enableMusic()}catch(e){/* safe fallback: user can tap music button */}
+if(!isIOS)attemptMusic(false);
 
-const starLayer=document.getElementById('stars');for(let i=0;i<34;i++){const t=document.createElement('span');t.className='star';t.style.left=((i*73+17)%100)+'%';t.style.top=((i*43+7)%100)+'%';t.style.setProperty('--time',(5+(i%7)*1.4)+'s');t.style.setProperty('--delay',(-i*.7)+'s');starLayer.appendChild(t)}
+const starLayer=document.getElementById('stars');const particleCount=window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:(window.matchMedia('(max-width: 520px)').matches?16:26);for(let i=0;i<particleCount;i++){const t=document.createElement('span');t.className='star';t.style.left=((i*73+17)%100)+'%';t.style.top=((i*43+7)%100)+'%';t.style.setProperty('--time',(5+(i%7)*1.4)+'s');t.style.setProperty('--delay',(-i*.7)+'s');starLayer.appendChild(t)}
 function show(id){if(!scenes.includes(id))return;const v=document.getElementById('sonyaVideo');if(id!=='videoScene'&&v&&!v.paused)v.pause();document.getElementById(current).classList.remove('active');document.getElementById(id).classList.add('active');current=id;window.scrollTo(0,0)}
 document.getElementById('toPortal').addEventListener('click',()=>{beginMusicOnFirstInvitationAction();show('portal')});
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.back)));
