@@ -65,7 +65,7 @@
 .photo-box{position:relative;width:min(380px,94vw);padding:12px 12px 24px;margin:8px auto 18px;background:#f5e9d5;border-radius:4px;box-shadow:0 20px 65px #0008,0 0 0 1px #c59c78;transform:rotate(-2deg);transition:transform .6s var(--ease),opacity .4s}
 .photo-box.turn{transform:rotate(5deg) translateX(-8px) scale(.97);opacity:.25}
 .photo-frame{aspect-ratio:4/4.35;position:relative;overflow:hidden;background:linear-gradient(140deg,#8e6e88,#a38c99);border:1px solid #d9baa0;display:flex;align-items:center;justify-content:center}
-.photo-frame img{width:100%;height:100%;object-fit:cover;display:none}
+.photo-frame img{display:none!important}.photo-sprite{position:absolute;inset:0;background-image:url('./assets/sonya_secret_album.jpg');background-size:300% 200%;background-position:0% 0%;display:none}.photo-sprite.ready{display:block}
 .photo-frame img.loaded{display:block}
 .photo-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;background:radial-gradient(circle at center,#ab8299,#54455e);color:#fce8d0;padding:22px;text-align:center}
 .photo-fallback svg{width:150px;height:150px;opacity:.75}
@@ -345,7 +345,7 @@
 <div class="album-head"><div class="kicker">Только не смейся!</div><h2 class="album-title">Секретный<br>альбом Сони</h2><p class="album-copy">Ты уже получил приглашение. Теперь получай подарок: шесть фотографий из разряда «ну всё, не показывай никому!»</p></div>
 <div class="photo-box" id="photoBox"><div class="photo-frame"><div class="photo-fallback" id="photoFallback">
 <svg viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="54" stroke="#f5dfc0" stroke-width="3" fill="none"/><circle cx="53" cy="60" r="5" fill="#ffe6bf"/><circle cx="88" cy="60" r="5" fill="#ffe6bf"/><path d="M43 86Q70 114 98 85" stroke="#ffe6bf" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M49 24L57 8L67 28M91 27L103 10L111 35" stroke="#ffe6bf" stroke-width="3" fill="none"/></svg>
-<small>Фото появится здесь<br>после загрузки в папку альбома</small></div><img id="currentPhoto" alt="Соня дурачится" loading="lazy"></div>
+<small>Шкатулка ждёт фотографий<br>Изображение скоро откроется</small></div><div class="photo-sprite" id="photoSprite" role="img" aria-label="Фотография Сони"></div><img id="currentPhoto" alt="" loading="lazy" hidden></div>
 <div class="photo-caption" id="photoCaption"></div><div class="photo-counter" id="photoCounter"></div></div>
 <div class="album-controls"><button id="photoPrev" aria-label="Предыдущее фото">←</button><button id="photoNext" aria-label="Следующее фото">→</button></div>
 <p class="album-page-note">Листай фотографии как карточки из секретного архива</p>
@@ -374,9 +374,17 @@ document.getElementById('replay').addEventListener('click',()=>show('news'));
 document.getElementById('albumReplay').addEventListener('click',()=>show('news'));
 const pics=[...document.querySelectorAll('[data-gallery-src]')].map(x=>({src:x.dataset.gallerySrc,cap:x.dataset.galleryCaption}));
 let photoIndex=0;const photo=document.getElementById('currentPhoto'),caption=document.getElementById('photoCaption'),counter=document.getElementById('photoCounter'),fallback=document.getElementById('photoFallback');
+const sprite=document.getElementById('photoSprite');let spriteLoaded=false;
+const spriteCheck=new Image();spriteCheck.onload=()=>{spriteLoaded=true;sprite.classList.add('ready');fallback.style.display='none'};spriteCheck.onerror=()=>{spriteLoaded=false;sprite.classList.remove('ready');fallback.style.display='flex'};spriteCheck.src='./assets/sonya_secret_album.jpg';
 function showPhoto(i){
  photoIndex=(i+pics.length)%pics.length;const row=pics[photoIndex],box=document.getElementById('photoBox');box.classList.add('turn');
- window.setTimeout(()=>{caption.textContent=row.cap;counter.textContent=(photoIndex+1)+' / '+pics.length;photo.classList.remove('loaded');fallback.style.display='flex';photo.onload=()=>{photo.classList.add('loaded');fallback.style.display='none'};photo.onerror=()=>{photo.classList.remove('loaded');fallback.style.display='flex'};photo.src=row.src;box.classList.remove('turn')},180)
+ window.setTimeout(()=>{
+ caption.textContent=row.cap;counter.textContent=(photoIndex+1)+' / '+pics.length;
+ const col=photoIndex%3,rr=Math.floor(photoIndex/3);
+ sprite.style.backgroundPosition=(col*50)+'% '+(rr*100)+'%';
+ sprite.setAttribute('aria-label',row.cap);fallback.style.display=spriteLoaded?'none':'flex';
+ box.classList.remove('turn')
+ },180)
 }
 document.getElementById('openGift').addEventListener('click',()=>{show('album');showPhoto(0)});
 document.getElementById('photoPrev').addEventListener('click',()=>showPhoto(photoIndex-1));
