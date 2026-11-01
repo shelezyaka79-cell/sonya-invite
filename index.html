@@ -144,6 +144,28 @@ body{overflow-x:hidden}
  .ios-client #portal .portal-title{font-size:clamp(35px,10vw,44px)}
  .ios-client .video-frame{width:min(250px,64vw)}
 }
+
+/* Safari ticket transition repair: full-screen envelope moved outside clipped scene. */
+.sealed-envelope{position:fixed!important;inset:0!important;z-index:250!important;
+  width:100vw;height:100dvh;min-height:100svh;max-height:none;
+  overflow-y:auto;overscroll-behavior:contain;
+  padding:max(30px,env(safe-area-inset-top,0px)) 20px max(30px,env(safe-area-inset-bottom,0px));
+  align-items:center;justify-content:center;flex-direction:column;
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+  background:radial-gradient(ellipse at center,#51405b,#111324 80%);
+  isolation:isolate;
+  pointer-events:auto;
+}
+body.ticket-sealed #envelopeOverlay{display:flex}
+body:not(.ticket-sealed) #envelopeOverlay{display:none!important}
+#ticket.sealed .ticket-shell{filter:none!important;opacity:.25;transform:scale(.98);pointer-events:none}
+#toTicket{position:relative;z-index:3;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+#unseal,#skipEnvelope{touch-action:manipulation}
+@media(max-height:640px){.sealed-envelope{justify-content:flex-start;gap:8px}
+ .sealed-envelope .envelope{height:155px;flex:0 0 auto}
+ .sealed-envelope .letter-intro{font-size:35px}
+ .sealed-envelope .seal{width:55px;height:55px;font-size:33px}
+}
 </style></head><body>
 <div id="stars" aria-hidden="true"></div>
 <button id="musicToggle" class="music-toggle" aria-label="Включить или выключить музыку" aria-pressed="false" type="button"><span class="music-glyph">♫</span><span id="musicLabel">♪ Музыка</span></button>
@@ -330,12 +352,7 @@ body{overflow-x:hidden}
 <div class="video-frame" id="videoFrame"><div class="video-placeholder" id="videoPlaceholder">Видео Сони<br><small style="font-size:13px;font-family:Manrope,sans-serif">Файл пока подключается к сайту</small></div><video id="sonyaVideo" controls playsinline webkit-playsinline preload="metadata" hidden><source src="./assets/sonya.mp4" type="video/mp4"></video></div>
 <div class="video-controls"><a class="video-direct" href="https://raw.githubusercontent.com/shelezyaka79-cell/sonya-invite/main/assets/sonya.mp4" target="_blank" rel="noopener">Если видео не открылось — смотреть напрямую ↗</a><button class="main-btn" id="toTicket"><span>Получить золотой билет</span><span class="arrow">✦</span></button><p class="video-note">Слушать звук можно по нажатию. Продолжить к билету можно в любой момент.</p></div>
 </section>
-<section id="ticket" class="scene" aria-label="Золотой билет на день рождения"><div class="sealed-envelope" id="envelopeOverlay" aria-label="Запечатанное письмо от Сони">
-<h2 class="letter-intro">Тебе пришло<br>письмо с печатью</h2>
-<p class="letter-sub">Восковая печать с цифрой восемь. Нажми — и золотой билет появится внутри.</p>
-<button class="envelope" id="unseal"><span class="back-fold"></span><span class="left-fold"></span><span class="right-fold"></span><span class="bottom-fold"></span><span class="seal">8</span></button>
-<p class="envelope-hint">Нажми на конверт ✦</p><button class="skip-envelope" id="skipEnvelope">Сразу посмотреть билет</button>
-</div><div class="magical-world" aria-hidden="true">
+<section id="ticket" class="scene" aria-label="Золотой билет на день рождения"><div class="magical-world" aria-hidden="true">
 <svg viewBox="0 0 430 860" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
 <defs><linearGradient id="castlemist" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#92a2af" stop-opacity=".25"/><stop offset="1" stop-color="#d5beaa" stop-opacity=".01"/></linearGradient><radialGradient id="warmwin"><stop stop-color="#ffe7af"/><stop offset="1" stop-color="#ac895b"/></radialGradient><filter id="softf"><feGaussianBlur stdDeviation="9"/></filter></defs>
 <circle cx="300" cy="157" r="82" fill="#e1c9a6" opacity=".09" filter="url(#softf)"/>
@@ -407,6 +424,12 @@ body{overflow-x:hidden}
 <p class="album-page-note">Листай фотографии как карточки из секретного архива</p>
 <template data-gallery-src="assets/gallery/1000170058.jpg" data-gallery-caption="Официально: настроение — отличное!" data-gallery-number="1"></template><template data-gallery-src="assets/gallery/1000170059.jpg" data-gallery-caption="А так я умею удивлять!" data-gallery-number="2"></template><template data-gallery-src="assets/gallery/1000170060.jpg" data-gallery-caption="Вверх тормашками? Запросто!" data-gallery-number="3"></template><template data-gallery-src="assets/gallery/1000170061.jpg" data-gallery-caption="Моя суперспособность — дурачиться" data-gallery-number="4"></template><template data-gallery-src="assets/gallery/1000170063.jpg" data-gallery-caption="Когда уже хочется праздника" data-gallery-number="5"></template><template data-gallery-src="assets/gallery/1000170062.jpg" data-gallery-caption="И вот я снова серьёзная. Почти!" data-gallery-number="6"></template><button class="album-direct" id="albumReplay">Начать волшебство сначала ↺</button>
 </section></main>
+<div class="sealed-envelope" id="envelopeOverlay" aria-label="Запечатанное письмо от Сони">
+<h2 class="letter-intro">Тебе пришло<br>письмо с печатью</h2>
+<p class="letter-sub">Восковая печать с цифрой восемь. Нажми — и золотой билет появится внутри.</p>
+<button class="envelope" id="unseal"><span class="back-fold"></span><span class="left-fold"></span><span class="right-fold"></span><span class="bottom-fold"></span><span class="seal">8</span></button>
+<p class="envelope-hint">Нажми на конверт ✦</p><button class="skip-envelope" id="skipEnvelope">Сразу посмотреть билет</button>
+</div>
 <script>
 (()=>{
 const scenes=['news','portal','videoScene','ticket','album'];let current='news',isOpening=false;
@@ -518,7 +541,7 @@ updateMusicButton();
 if(!isIOS)attemptMusic(false);
 
 const starLayer=document.getElementById('stars');const particleCount=window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:(window.matchMedia('(max-width: 520px)').matches?16:26);for(let i=0;i<particleCount;i++){const t=document.createElement('span');t.className='star';t.style.left=((i*73+17)%100)+'%';t.style.top=((i*43+7)%100)+'%';t.style.setProperty('--time',(5+(i%7)*1.4)+'s');t.style.setProperty('--delay',(-i*.7)+'s');starLayer.appendChild(t)}
-function show(id){if(!scenes.includes(id))return;const v=document.getElementById('sonyaVideo');if(id!=='videoScene'&&v&&!v.paused)v.pause();document.getElementById(current).classList.remove('active');document.getElementById(id).classList.add('active');current=id;window.scrollTo(0,0)}
+function show(id){if(!scenes.includes(id))return;const v=document.getElementById('sonyaVideo');if(id!=='videoScene'&&v&&!v.paused)v.pause();if(id!=='ticket'){document.body.classList.remove('ticket-sealed');document.getElementById('envelopeOverlay').setAttribute('aria-hidden','true')}document.getElementById(current).classList.remove('active');document.getElementById(id).classList.add('active');current=id;window.scrollTo(0,0)}
 document.getElementById('toPortal').addEventListener('click',()=>{beginMusicOnFirstInvitationAction();show('portal')});
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.back)));
 document.getElementById('openDoor').addEventListener('click',openDoors);document.getElementById('portalStage').addEventListener('click',openDoors);
@@ -526,13 +549,14 @@ function openDoors(){if(isOpening)return;isOpening=true;const p=document.getElem
 function checkVideo(){const v=document.getElementById('sonyaVideo'),place=document.getElementById('videoPlaceholder');place.hidden=true;v.hidden=false;v.load()}
 const sonyaVideo=document.getElementById('sonyaVideo');
 sonyaVideo.addEventListener('error',()=>{const p=document.getElementById('videoPlaceholder');p.hidden=false;sonyaVideo.hidden=true;p.innerHTML='Видео временно недоступно<br><small style="font:12px Manrope,sans-serif">Открой ролик по прямой ссылке ниже</small>'});
-document.getElementById('toTicket').addEventListener('click',()=>{show('ticket');sealTicket()});
+document.getElementById('toTicket').setAttribute('type','button');
+document.getElementById('toTicket').addEventListener('click',e=>{e.preventDefault();sealTicket();show('ticket')});
 
 let isUnsealing=false;
-function sealTicket(){const ticket=document.getElementById('ticket');ticket.classList.add('sealed');document.getElementById('unseal').classList.remove('opening');isUnsealing=false}
-function unseal(){if(isUnsealing)return;isUnsealing=true;const env=document.getElementById('unseal');env.classList.add('opening');window.setTimeout(()=>{document.getElementById('ticket').classList.remove('sealed');isUnsealing=false},950)}
+function sealTicket(){const ticket=document.getElementById('ticket');ticket.classList.add('sealed');document.getElementById('unseal').classList.remove('opening');document.getElementById('envelopeOverlay').removeAttribute('aria-hidden');document.body.classList.add('ticket-sealed');isUnsealing=false}
+function unseal(){if(isUnsealing)return;isUnsealing=true;const env=document.getElementById('unseal');env.classList.add('opening');window.setTimeout(()=>{document.body.classList.remove('ticket-sealed');document.getElementById('envelopeOverlay').setAttribute('aria-hidden','true');document.getElementById('ticket').classList.remove('sealed');isUnsealing=false;document.getElementById('ticket').scrollIntoView({behavior:'auto',block:'start'})},850)}
 document.getElementById('unseal').addEventListener('click',unseal);
-document.getElementById('skipEnvelope').addEventListener('click',()=>document.getElementById('ticket').classList.remove('sealed'));
+document.getElementById('skipEnvelope').addEventListener('click',()=>{document.body.classList.remove('ticket-sealed');document.getElementById('envelopeOverlay').setAttribute('aria-hidden','true');document.getElementById('ticket').classList.remove('sealed');document.getElementById('ticket').scrollIntoView({behavior:'auto',block:'start'})});
 document.getElementById('replay').addEventListener('click',()=>show('news'));
 document.getElementById('albumReplay').addEventListener('click',()=>show('news'));
 const pics=[...document.querySelectorAll('[data-gallery-src]')].map(x=>({src:x.dataset.gallerySrc,cap:x.dataset.galleryCaption}));
@@ -559,5 +583,10 @@ if(name){document.getElementById('personalGreeting').textContent='Привет, 
 const feedback=document.getElementById('feedback');
 document.getElementById('reply').addEventListener('click',async()=>{const msg='Соня, я приду 3 ноября на твой день рождения! ♥';if(navigator.share){try{await navigator.share({text:msg});feedback.textContent='Отправь сообщение тому, кто прислал приглашение';return}catch(e){if(e.name==='AbortError')return}}try{await navigator.clipboard.writeText(msg);feedback.textContent='Ответ скопирован. Отправь его в мессенджере'}catch{feedback.textContent='Напиши в ответ: «Соня, я приду!»'}});
 document.getElementById('calendar').addEventListener('click',()=>{const esc=s=>s.replace(/\\/g,'\\\\').replace(/,/g,'\\,').replace(/;/g,'\\;').replace(/\n/g,'\\n');const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sonya Birthday Invite//RU','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:sonya8-2026-11-03-botanika-2@invite.example','DTSTAMP:20261101T080000Z','DTSTART:20261103T130000Z','DTEND:20261103T170000Z','SUMMARY:'+esc('День рождения Сони — 8 лет'),'DESCRIPTION:'+esc('Будем праздновать в Ботанике № 2, Ижевск.'),'LOCATION:'+esc('Ижевск, улица Кирова, 10Б'),'END:VEVENT','END:VCALENDAR'];const blob=new Blob([lines.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sonya-birthday-03-11-2026.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);feedback.textContent='Событие скачано. Открой файл и подтверди добавление в календарь'});
+
+// Direct recovery route: useful if an older Safari tab cached a broken scene.
+const jumpTo=new URLSearchParams(location.search).get('view');
+if(jumpTo==='ticket'){sealTicket();show('ticket')}
+else if(jumpTo==='album'){show('album');showPhoto(0)}
 })();
 </script></body></html>
