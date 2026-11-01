@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#130f29"/>
+<title>Секретное приглашение от Сони ✨</title>
+<meta name="description" content="Срочная новость! Соня приготовила для тебя секрет. Открой приглашение на 3 ноября!"/>
+<meta property="og:title" content="Срочная новость от Сони! 🎁"/>
+<meta property="og:description" content="3 ноября · 17:00 · Ижевск. Открой секретное приглашение"/>
+<meta property="og:type" content="website"/>
+<meta name="robots" content="noindex,nofollow,noarchive"/>
+<style>
+:root{color-scheme:dark; --cream:#fff6e5; --gold:#efcf91; --aqua:#a4e4d3; --pink:#f1b6d0; --dark:#110e28}
+*{box-sizing:border-box}html{min-height:100%;scroll-behavior:smooth}body{margin:0;min-height:100vh;overflow-x:hidden;background:#100d27;color:var(--cream);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}a{color:inherit}
+.sky{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse 85% 58% at 50% 72%,#543663 0%,#251a48 45%,#100e28 100%)}.sky:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,#5b7c71a8 0%,transparent 42%),radial-gradient(ellipse at 80% 8%,#643e6890 0%,transparent 31%);opacity:.7}
+.stars{position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(2px 2px at 15% 15%,#fff8,transparent),radial-gradient(1px 1px at 35% 28%,#fff,transparent),radial-gradient(2px 2px at 70% 12%,#fff8,transparent),radial-gradient(2px 2px at 82% 40%,#fff7,transparent),radial-gradient(2px 2px at 9% 62%,#fff9,transparent),radial-gradient(1px 1px at 57% 8%,#fff,transparent),radial-gradient(1px 1px at 41% 63%,#fff8,transparent),radial-gradient(2px 2px at 93% 73%,#fff8,transparent);animation:starshimmer 6s ease-in-out infinite alternate}.halo{position:fixed;left:50%;top:51%;width:min(800px,120vw);height:min(800px,120vw);transform:translate(-50%,-50%);border-radius:50%;z-index:-1;pointer-events:none;background:radial-gradient(circle,#9a5a9e55 0%,#557f9966 28%,transparent 67%);filter:blur(32px);animation:halo 7s ease-in-out infinite alternate}
+.petal{position:fixed;z-index:0;pointer-events:none;width:12px;height:19px;background:linear-gradient(145deg,#f8bad1,#a871b6);border-radius:80% 0 75% 0;opacity:.55;left:var(--left);top:-6vh;animation:fall var(--fall) linear infinite;animation-delay:var(--delay);filter:blur(.15px)}
+#cover{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 20px 45px;text-align:center;transition:opacity .58s ease,transform .58s ease}.eyebrow{letter-spacing:.23em;text-transform:uppercase;color:var(--aqua);font-weight:750;font-size:10px;text-shadow:0 0 18px #c9f9ef66;display:flex;align-items:center;justify-content:center;gap:12px}.eyebrow:before,.eyebrow:after{content:"";width:24px;height:1px;background:linear-gradient(90deg,transparent,var(--aqua))}.eyebrow:after{transform:rotate(180deg)}.cover-title{font-family:Georgia,"Times New Roman",serif;font-weight:400;line-height:1.06;font-size:clamp(42px,8vw,75px);letter-spacing:-.045em;margin:16px 0 10px}.cover-title em{font-style:italic;color:var(--gold);text-shadow:0 0 25px #fed68c39}.cover-sub{max-width:360px;margin:0 auto 13px;font-size:14px;line-height:1.6;color:#e0d8ea}
+.dome-wrap{width:min(470px,91vw);position:relative;margin:0 auto -2px;cursor:pointer;border:0;background:transparent;padding:0;display:block;filter:drop-shadow(0 16px 40px #e2bb6938);transition:transform .35s ease}.dome-wrap:hover,.dome-wrap:focus-visible{transform:scale(1.035)}.dome-wrap:focus-visible{outline:2px solid var(--gold);outline-offset:5px;border-radius:100px}.dome-svg{width:100%;height:auto;display:block;overflow:visible}.glow-orb{animation:orb 4s ease-in-out infinite alternate;transform-origin:50% 55%}.dome-lights{animation:glint 3s ease-in-out infinite alternate}.dome-action{display:block;position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);background:#f8edcf;color:#49315b;padding:10px 19px;border-radius:40px;font-weight:800;font-size:12px;white-space:nowrap;box-shadow:0 0 28px #ffe6b6ad;animation:buttonpulse 2.7s ease-in-out infinite;pointer-events:none}
+.cover-bottom{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:#d1c0d6;margin-top:8px}
+#invite{display:none;position:relative;min-height:100svh;padding:26px 18px 45px;align-items:center;justify-content:center;opacity:0;transform:translateY(30px)}#invite.visible{display:flex;animation:reveal .7s ease forwards}.invite-card{width:min(470px,100%);border:1px solid #f7e7c45c;border-radius:27px;background:linear-gradient(160deg,#2b2551eb,#171a39f2 50%,#26384bea);box-shadow:0 18px 90px #0006,0 0 70px #a76eb427;backdrop-filter:blur(20px);padding:29px 24px 23px;text-align:center;overflow:hidden;position:relative}.invite-card:before{content:"";position:absolute;top:-100px;left:10%;width:300px;height:200px;background:#ffdfb433;filter:blur(75px);border-radius:50%;pointer-events:none}.ornament{display:flex;align-items:center;justify-content:center;gap:13px;color:var(--gold);font-size:16px;margin-bottom:13px}.ornament:before,.ornament:after{content:"";height:1px;width:48px;background:linear-gradient(90deg,transparent,#ebc78a)}.ornament:after{transform:scaleX(-1)}.inv-title{font-family:Georgia,"Times New Roman",serif;font-size:clamp(41px,9.5vw,63px);font-weight:400;line-height:1;letter-spacing:-.047em;margin:3px 0 8px;color:#fff7e4}.inv-title i{font-style:italic;color:#efcfa5}.inv-caption{margin:9px auto 16px;max-width:320px;font-size:15px;line-height:1.55;color:#ede3ee}.quote{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.55;color:#e9dbd9;margin:7px auto 16px;max-width:345px}.quote b{color:var(--aqua);font-weight:normal;font-style:italic}.little-sparkles{display:block;font-size:20px;letter-spacing:.4em;margin-bottom:15px}
+.details{background:#f8edda0e;border:1px solid #ead8b53a;border-radius:18px;text-align:left;margin:0 auto 16px;padding:16px 16px 12px}.det-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}.det-row:last-child{margin-bottom:0}.det-icon{display:flex;width:38px;flex:0 0 38px;height:38px;align-items:center;justify-content:center;background:#f0d4aa21;border-radius:12px;font-size:18px}.det-label{font-size:10px;letter-spacing:.13em;color:#c6bcce;text-transform:uppercase;margin-bottom:2px}.det-val{font-size:15px;line-height:1.43;font-weight:660}.det-note{font-size:12px;line-height:1.45;color:#d4c8d9;margin-top:2px}
+.action-line{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:8px}.action{display:flex;align-items:center;justify-content:center;gap:6px;min-height:45px;padding:12px 9px;border-radius:14px;text-decoration:none;border:1px solid #d5c7a55c;background:#ffe9c411;color:#f9e9cf;font-weight:700;font-size:12px;cursor:pointer}.action.primary{grid-column:1/-1;background:linear-gradient(115deg,#e7c994,#f9e6bc);color:#332a44;border:0;font-size:14px;box-shadow:0 3px 22px #e8c48d35}.action:hover{filter:brightness(1.12)}.footer{margin-top:14px;color:#b9b4cd;font-size:11px;line-height:1.5}.role{display:none;margin:4px auto 16px;max-width:290px;font-size:12px;color:var(--aqua);background:#7bd8bd17;border-radius:50px;padding:8px 10px}.role.visible{display:block}.replay{border:0;background:none;color:#c9c0db;margin:17px auto 0;text-decoration:underline;text-underline-offset:3px;font-size:12px;cursor:pointer}.feedback{padding:9px 13px;color:#a4e4d3;font-size:12px;min-height:18px}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}.signature{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-size:19px;margin:0}.reduced{animation:none!important}
+@keyframes starshimmer{from{opacity:.45}to{opacity:1}}@keyframes halo{from{opacity:.65;transform:translate(-50%,-50%) scale(.84)}to{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}@keyframes fall{0%{transform:translate3d(0,-30px,0) rotate(0deg);opacity:0}10%{opacity:.53}90%{opacity:.53}100%{transform:translate3d(95px,110vh,0) rotate(650deg);opacity:0}}@keyframes buttonpulse{50%{box-shadow:0 0 42px #ffe6b6e0;transform:translate(-50%,-50%) scale(1.07)}}@keyframes orb{from{opacity:.68;transform:scale(.98)}to{opacity:1;transform:scale(1.03)}}@keyframes glint{50%{opacity:.6}}@keyframes reveal{to{opacity:1;transform:translateY(0)}}
+@media(min-width:700px){#invite{padding:40px 20px}.invite-card{padding:37px 36px 28px}.cover-sub{font-size:16px}}@media(max-width:370px){.invite-card{padding:24px 16px}.det-val{font-size:14px}.quote{font-size:16px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Вторая версия: новостной экран, золотой билет, мини-карта */
+#news{min-height:100svh;position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;padding:22px 20px 34px;max-width:600px;margin:auto;overflow:hidden}
+#news:before{content:'';position:absolute;width:310px;height:310px;top:12%;right:-33%;background:#bd3e9e66;filter:blur(95px);border-radius:50%;pointer-events:none}
+.news-top,.news-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:1}
+.news-brand{font-size:13px;font-weight:900;letter-spacing:.3em;color:#fff3d3}.news-live{display:flex;align-items:center;gap:6px;border:1px solid #ff8094a8;background:#5f1e42;padding:6px 10px;border-radius:9px;font-size:11px;font-weight:900;letter-spacing:.12em}.news-live:before{content:'';background:#ff6687;width:7px;height:7px;border-radius:50%;box-shadow:0 0 12px #ff6687;animation:live 1s infinite alternate}
+.news-center{text-align:center;z-index:1;position:relative;padding:55px 0}.news-kicker{color:#b9e9df;letter-spacing:.24em;font-size:10px;font-weight:900;margin-bottom:19px}.news-headline{font:normal clamp(43px,10vw,73px)/.99 Georgia,serif;letter-spacing:-.06em;margin:0 auto 19px;max-width:520px}.news-headline em{font-style:italic;color:#f6d595}.news-stamp{font-size:13px;font-weight:750;letter-spacing:.17em;color:#f9c0d7;padding:10px 15px;border:1px solid #e6b6d761;border-radius:40px;display:inline-block}.news-line{width:60%;height:1px;margin:30px auto;background:linear-gradient(90deg,transparent,#f7e1b0,transparent)}.news-desc{font:normal 21px/1.5 Georgia,serif;color:#e7dfe9;max-width:410px;margin:0 auto 28px}.news-cta{display:flex;justify-content:center;align-items:center;width:min(335px,100%);margin:0 auto;border:0;border-radius:17px;min-height:57px;background:linear-gradient(115deg,#f4d79e,#fff3d6);color:#322344;font-size:15px;font-weight:850;box-shadow:0 0 35px #ebc37d3a;cursor:pointer;animation:buttonpulseNews 3s ease-in-out infinite}.news-small{font-size:12px;color:#cfc5da;max-width:320px;margin:14px auto 0;line-height:1.5}.news-bottom{border-top:1px solid #ffffff45;padding-top:14px;letter-spacing:.16em;color:#d1c5de;font-size:9px;text-transform:uppercase}.news-bottom strong{color:#f5cf99}
+body:not(.news-done) #cover{display:none}body.news-done #news{display:none}
+.ticket-banner{border:1px solid #e9c78895;border-radius:17px;padding:11px 13px;margin-bottom:23px;background:linear-gradient(125deg,#f0d6a02e,#ffffff03 42%,#b8873740);display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:inset 0 0 20px #edd19a0d;transform:rotate(-1deg);animation:ticketIn .9s ease both}.ticket-title{font:italic normal 15px Georgia,serif;color:#fbe6b0;text-align:left}.ticket-sub{font-size:9px;font-weight:900;letter-spacing:.16em;color:#efcf9b;text-align:left;margin-top:4px}.ticket-no{border:1px solid #f2dca85e;border-radius:8px;padding:8px;font-size:9px;line-height:1.6;text-align:right;color:#e8d7b2;font-weight:750;white-space:nowrap}
+.map-box{margin-top:17px;border:1px solid #ead8b53a;border-radius:17px;overflow:hidden;background:#ffffff09}.map-box summary{cursor:pointer;list-style:none;padding:12px 14px;text-align:left;font-size:13px;font-weight:700;color:#f0e0ce;display:flex;justify-content:space-between;align-items:center}.map-box summary::-webkit-details-marker{display:none}.map-box summary:after{content:'▾';font-size:18px}.map-box[open] summary:after{content:'▴'}.map-box iframe{display:block;width:100%;height:230px;border:0;background:#d3d7ce}.map-fallback{font-size:11px;color:#ded1ea;display:block;text-align:center;padding:9px}
+@keyframes live{to{opacity:.1}}@keyframes ticketIn{from{transform:translateY(-22px) rotate(-6deg);opacity:0}to{transform:translateY(0) rotate(-1deg);opacity:1}}@keyframes buttonpulseNews{50%{box-shadow:0 0 45px #efca86a6}}
+@media(prefers-reduced-motion:reduce){.news-cta{animation:none}}
+</style>
+</head>
+<body>
+<div class="sky"></div><div class="stars"></div><div class="halo"></div>
+<div class="petal" style="--left:9%;--fall:14s;--delay:-7s"></div><div class="petal" style="--left:25%;--fall:18s;--delay:-13s"></div><div class="petal" style="--left:64%;--fall:15s;--delay:-3s"></div><div class="petal" style="--left:86%;--fall:19s;--delay:-12s"></div><div class="petal" style="--left:45%;--fall:21s;--delay:-19s"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<main>
+<section id="news" aria-label="Срочные новости от Сони">
+  <div class="news-top"><div class="news-brand">СОНЯ • NEWS</div><div class="news-live">ЭКСТРЕННО</div></div>
+  <div class="news-center">
+    <div class="news-kicker">НЕОБЫЧНОЕ СОБЫТИЕ В ИЖЕВСКЕ</div>
+    <h1 class="news-headline">СРОЧНОЕ<br/><em>СООБЩЕНИЕ!</em></h1>
+    <div class="news-stamp">03.11.2026 · 17:00</div>
+    <div class="news-line"></div>
+    <p class="news-desc">В районе парка Кирова ожидается аномальная концентрация улыбок, объятий и праздничного настроения.</p>
+    <button class="news-cta" id="news-next">Что же там случится? →</button>
+    <p class="news-small">Эксклюзивное приглашение для самых близких. Листай дальше: внутри тебя ждёт секрет!</p>
+  </div>
+  <div class="news-bottom"><span>СПЕЦИАЛЬНЫЙ ВЫПУСК</span><strong>ТОЛЬКО ДЛЯ СВОИХ ✦</strong></div>
+</section>
+<section id="cover" aria-label="Секретное приглашение от Сони">
+<div class="eyebrow">тебе пришло кое-что особенное</div>
+<h1 class="cover-title">Это <em>Соня!</em><br/>У меня секрет…</h1>
+<p class="cover-sub">Я нашла волшебный купол. И хочу кое-кого туда пригласить. Догадываешься кого?</p>
+<button class="dome-wrap" id="openInvite" aria-label="Нажми на купол, чтобы открыть приглашение">
+<svg class="dome-svg" viewBox="0 0 500 405" role="img" aria-label="Светящийся стеклянный купол в ночном саду">
+<defs><radialGradient id="window" cx="50%" cy="45%" r="70%"><stop offset="0%" stop-color="#eae4b1" stop-opacity=".75"/><stop offset="43%" stop-color="#759c99" stop-opacity=".38"/><stop offset="100%" stop-color="#1c3452" stop-opacity=".45"/></radialGradient><radialGradient id="inside"><stop offset="0" stop-color="#ffddb0" stop-opacity=".9"/><stop offset="1" stop-color="#f8bc7b" stop-opacity="0"/></radialGradient><linearGradient id="rib" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#effff3" stop-opacity=".9"/><stop offset="1" stop-color="#d8ddb0" stop-opacity=".37"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="13"/></filter><filter id="shine"><feGaussianBlur stdDeviation="4"/></filter></defs>
+<ellipse cx="250" cy="365" rx="225" ry="17" fill="#f1c189" opacity=".25" filter="url(#blur)"/>
+<g opacity=".46" fill="#162f37"><path d="M17 367L50 305L83 368Z"/><path d="M35 366L68 252L99 366Z"/><path d="M405 370L437 263L470 370Z"/><path d="M431 365L472 295L497 365Z"/></g>
+<path d="M42 350A208 208 0 0 1 458 350Z" fill="url(#window)" stroke="#ffeac0" stroke-opacity=".63" stroke-width="3"/>
+<g class="glow-orb"><ellipse cx="250" cy="283" rx="154" ry="90" fill="url(#inside)" filter="url(#blur)"/></g>
+<g fill="none" stroke="url(#rib)" stroke-width="2.3" opacity=".78"><path d="M250 142V350"/><path d="M250 142Q115 224 116 350"/><path d="M250 142Q385 224 384 350"/><path d="M250 142Q56 270 55 350"/><path d="M250 142Q444 270 445 350"/><path d="M54 283Q250 244 446 283"/><path d="M94 217Q250 192 406 217"/></g>
+<g opacity=".86"><path d="M149 349V299H352V349" fill="#6c4c69" opacity=".6"/><path d="M174 350V321H216V350M287 350V321H329V350" fill="#a76b6f" stroke="#e0ab81" stroke-width="2"/><path d="M223 350V306Q250 280 278 306V350" fill="#e9ba8e" opacity=".44"/></g>
+<g class="dome-lights" fill="#fff1bd"><circle cx="121" cy="284" r="4"/><circle cx="155" cy="251" r="3"/><circle cx="184" cy="231" r="4"/><circle cx="212" cy="220" r="3.5"/><circle cx="245" cy="217" r="4"/><circle cx="279" cy="220" r="4"/><circle cx="313" cy="231" r="3.5"/><circle cx="344" cy="250" r="4"/><circle cx="378" cy="285" r="3.5"/></g>
+<g fill="#ffe6a1" opacity=".65" filter="url(#shine)"><circle cx="121" cy="284" r="7"/><circle cx="155" cy="251" r="7"/><circle cx="184" cy="231" r="7"/><circle cx="212" cy="220" r="7"/><circle cx="245" cy="217" r="7"/><circle cx="279" cy="220" r="7"/><circle cx="313" cy="231" r="7"/><circle cx="344" cy="250" r="7"/><circle cx="378" cy="285" r="7"/></g>
+<path d="M42 350H458" stroke="#f7dcb5" stroke-opacity=".72" stroke-width="5" stroke-linecap="round"/><path d="M109 263C145 172 192 164 214 154" fill="none" stroke="#fff" stroke-width="3" opacity=".18"/>
+<g fill="#a9d5b0" opacity=".55"><ellipse cx="62" cy="352" rx="17" ry="5"/><ellipse cx="429" cy="357" rx="19" ry="6"/><path d="M65 353q-9-41-26-41q15 23 26 41m-5 0q16-43 28-50q-8 27-28 50M431 357q-20-44-32-44q5 23 32 44m-3 0q7-39 26-41q-13 23-26 41"/></g>
+<g stroke="#f1d7a8" stroke-width="1.5" fill="none"><path d="M76 179v-18m-9 9h18"/><path d="M432 190v-16m-8 8h16"/><path d="M376 117v-11m-6 6h12"/></g></svg>
+<span class="dome-action">Нажми на купол ✨</span>
+</button>
+<div class="cover-bottom">✦ только для самых любимых ✦</div>
+</section>
+<section id="invite" aria-label="Приглашение на день рождения Сони">
+<div class="invite-card">
+<div class="ticket-banner"><div><div class="ticket-title">Золотой билет от Сони</div><div class="ticket-sub">ДОПУСК НА ГЛАВНОЕ СОБЫТИЕ НОЯБРЯ</div></div><div class="ticket-no">VIP GUEST<br/>№ 003</div></div>
+<div class="ornament">✦ ✿ ✦</div>
+<div class="eyebrow">официально и совершенно секретно</div>
+<h2 class="inv-title">Ты — <i>в списке!</i></h2>
+<p class="inv-caption" id="helloText">Привет! Это Соня. Я собираю всех любимых людей на свой день рождения.</p>
+<div class="role" id="personalRole"></div>
+<p class="quote">И знаешь что? <b>Без тебя праздник будет не совсем настоящим.</b> Поэтому очень-очень жду! ♡</p>
+<span class="little-sparkles">✧ ✦ ✧</span>
+<div class="details">
+<div class="det-row"><div class="det-icon">📅</div><div><div class="det-label">Когда</div><div class="det-val">3 ноября 2026, вторник</div><div class="det-note">17:00–21:00 по ижевскому времени</div></div></div>
+<div class="det-row"><div class="det-icon">🏡</div><div><div class="det-label">Где</div><div class="det-val">Гостевой дом «Ботаника», № 2</div><div class="det-note">Ижевск, ул. Кирова, 10Б<br/>Рядом с кафе-парком «Теремок»</div></div></div>
+</div>
+<p class="signature">Обнимаю! Твоя Соня ♥</p>
+<div class="action-line">
+<button class="action primary" id="reply">🎉 Отправить ответ «Я приду»</button>
+<a class="action" href="https://yandex.ru/maps/?rtext=~56.865841%2C53.166191&rtt=auto" target="_blank" rel="noopener noreferrer">📍 Как добраться</a>
+<button class="action" id="calendar">📆 В календарь</button>
+</div>
+<details class="map-box"><summary>🗺 Посмотреть место на карте</summary>
+<iframe loading="lazy" title="Гостевой дом Ботаника на карте Ижевска" src="https://yandex.ru/map-widget/v1/?ll=53.166191%2C56.865841&z=16&pt=53.166191%2C56.865841%2Cpm2rdm"></iframe>
+<a class="map-fallback" href="https://yandex.ru/maps/?rtext=~56.865841%2C53.166191&rtt=auto" target="_blank" rel="noopener">Открыть в Яндекс Картах ↗</a></details>
+<div class="feedback" id="feedback" aria-live="polite"></div>
+<div class="footer">Торт, сюрпризы и встреча любимых людей.<br/>Очень жду! ✨</div>
+<button class="replay" id="replay">Посмотреть волшебство ещё раз ↺</button>
+</div>
+</section>
+</main>
+<script>
+(()=>{
+document.getElementById('news-next').addEventListener('click',()=>{document.body.classList.add('news-done');window.scrollTo(0,0)});
+const cover=document.getElementById('cover'),invite=document.getElementById('invite'),open=document.getElementById('openInvite'),feedback=document.getElementById('feedback');
+const params=new URLSearchParams(window.location.search);const to=(params.get('to')||'').trim().slice(0,48);const role=(params.get('role')||'').trim().slice(0,80);
+if(to){document.getElementById('helloText').textContent='Привет, '+to+'! Это Соня. Я собираю всех любимых людей на свой день рождения. И ты обязательно должен быть там!';}
+if(role){const box=document.getElementById('personalRole');box.textContent='Твоя секретная роль: '+role+' ✨';box.classList.add('visible')}
+let playing=false;const canvas=document.getElementById('confetti'),ctx=canvas.getContext('2d');let pieces=[],af=0;
+function resize(){const d=Math.min(window.devicePixelRatio||1,2);canvas.width=innerWidth*d;canvas.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0)}window.addEventListener('resize',resize);resize();
+function burst(){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;let mid=innerWidth/2,top=innerHeight*.34;const colors=['#f6d38a','#fff3ce','#d49dec','#ace8d5','#f6b0c9'];pieces=Array.from({length:115},()=>({x:mid+(Math.random()-.5)*150,y:top+(Math.random()-.5)*100,vx:(Math.random()-.5)*12,vy:-Math.random()*10-3,r:2+Math.random()*5,a:Math.random()*Math.PI,rv:(Math.random()-.5)*.2,life:95+Math.random()*40,c:colors[Math.floor(Math.random()*colors.length)]}));cancelAnimationFrame(af);tick()}
+function tick(){ctx.clearRect(0,0,innerWidth,innerHeight);pieces=pieces.filter(p=>p.life-->0);for(let p of pieces){p.x+=p.vx;p.y+=p.vy;p.vy+=.15;p.vx*=.997;p.a+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=Math.min(1,p.life/24);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.7);ctx.restore()}if(pieces.length)af=requestAnimationFrame(tick)}
+function show(){if(playing)return;playing=true;cover.style.opacity='0';cover.style.transform='scale(1.06)';setTimeout(()=>{cover.style.display='none';invite.classList.add('visible');scrollTo({top:0,behavior:'instant'});burst();},440)}
+open.addEventListener('click',show);document.getElementById('replay').addEventListener('click',()=>{invite.classList.remove('visible');cover.style.display='flex';cover.style.transform='';cover.style.opacity='1';playing=false;feedback.textContent='';scrollTo({top:0,behavior:'smooth'})});
+function writeIcs(){const dt='20261103',ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Sonya//Birthday Invitation//RU','BEGIN:VEVENT','UID:sonya-birthday-2026-11-03-botanika-2@example.invalid','DTSTAMP:20261101T070000Z','DTSTART:20261103T130000Z','DTEND:20261103T170000Z','SUMMARY:День рождения Сони 🎂','DESCRIPTION:Соня очень ждёт тебя! Гостевой дом «Ботаника» №2.','LOCATION:Ижевск\, улица Кирова\, 10Б','END:VEVENT','END:VCALENDAR'].join('\r\n');const url=URL.createObjectURL(new Blob([ics],{type:'text/calendar;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='День-рождения-Сони.ics';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);feedback.textContent='Скачан файл события. Открой его и подтверди добавление в календарь.'}
+document.getElementById('calendar').addEventListener('click',writeIcs);
+document.getElementById('reply').addEventListener('click',async()=>{burst();const msg='Соня, я обязательно приду 3 ноября на твой день рождения! 🎉💛';if(navigator.share){try{await navigator.share({text:msg});feedback.textContent='Выбери получателя и отправь сообщение 💛';return}catch(e){if(e.name==='AbortError')return}}try{await navigator.clipboard.writeText(msg);feedback.textContent='Ответ скопирован. Отправь его в чат, где пришло приглашение 💛'}catch(e){feedback.textContent='Напиши в ответ в мессенджере: «Соня, я приду!» 💛'}});
+})();
+</script>
+</body>
+</html>
