@@ -11,7 +11,7 @@
 /* V5: enchanted Victorian storybook, layered environments and secret photo gift */
 #news,#portal,#videoScene,#ticket,#album{position:relative}
 .scene::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.63' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E")}
-.magical-world{position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.magical-world{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .magical-world svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.87;animation:worldSway 18s ease-in-out infinite alternate}
 .magical-world .mist{position:absolute;left:-25%;width:150%;height:24%;border-radius:50%;background:radial-gradient(ellipse,#c6c4b142,transparent 69%);filter:blur(25px);animation:mistMove 13s ease-in-out infinite alternate}
 .magical-world .mist.one{bottom:5%;}.magical-world .mist.two{bottom:27%;opacity:.42;animation-duration:19s;animation-direction:alternate-reverse}
@@ -355,7 +355,7 @@
 (()=>{
 const scenes=['news','portal','videoScene','ticket','album'];let current='news',isOpening=false;
 const starLayer=document.getElementById('stars');for(let i=0;i<34;i++){const t=document.createElement('span');t.className='star';t.style.left=((i*73+17)%100)+'%';t.style.top=((i*43+7)%100)+'%';t.style.setProperty('--time',(5+(i%7)*1.4)+'s');t.style.setProperty('--delay',(-i*.7)+'s');starLayer.appendChild(t)}
-function show(id){if(!scenes.includes(id))return;document.getElementById(current).classList.remove('active');document.getElementById(id).classList.add('active');current=id;window.scrollTo(0,0)}
+function show(id){if(!scenes.includes(id))return;const v=document.getElementById('sonyaVideo');if(id!=='videoScene'&&v&&!v.paused)v.pause();document.getElementById(current).classList.remove('active');document.getElementById(id).classList.add('active');current=id;window.scrollTo(0,0)}
 document.getElementById('toPortal').addEventListener('click',()=>show('portal'));
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.back)));
 document.getElementById('openDoor').addEventListener('click',openDoors);document.getElementById('portalStage').addEventListener('click',openDoors);
