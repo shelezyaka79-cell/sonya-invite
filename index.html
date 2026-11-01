@@ -124,7 +124,7 @@
 </style></head><body>
 <div id="stars" aria-hidden="true"></div>
 <button id="musicToggle" class="music-toggle" aria-label="Включить или выключить музыку" aria-pressed="false" type="button"><span class="music-glyph">♫</span><span id="musicLabel">♪ Музыка</span></button>
-<audio id="backgroundMusic" src="https://archive.org/download/Ondrosik-Free-music-catalog/Enchanted%20Valley.mp3" loop preload="auto" playsinline></audio>
+<audio id="backgroundMusic" src="./assets/enchanted-fairytale_88560.mp3" loop preload="auto" playsinline></audio>
 <main>
 <section id="news" class="scene active" aria-label="Срочные новости"><div class="magical-world" aria-hidden="true">
 <svg viewBox="0 0 430 860" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -458,7 +458,7 @@ function enableMusic(fromGuest=false){
   if(webAudioFactory&&!soundContext){try{soundContext=new webAudioFactory();soundMaster=soundContext.createGain();soundMaster.gain.value=.0001;soundMaster.connect(soundContext.destination);soundContext.resume().catch(()=>{})}catch(e){soundContext=null;soundMaster=null}}
   if(videoIsPlaying())return;
   if(backgroundMusic.readyState>=2){
-    musicBackend='track';backgroundMusic.volume=.105;
+    musicBackend='track';backgroundMusic.volume=.10;
     const playResult=backgroundMusic.play();
     if(playResult&&typeof playResult.catch==='function')playResult.catch(()=>{if(musicEnabled&&musicBackend==='track')startSynthesis()});
   } else startSynthesis();
@@ -475,7 +475,7 @@ function suspendMusicForVideo(){
 }
 function resumeMusicAfterVideo(){
   if(!musicEnabled||document.hidden||videoIsPlaying())return;
-  if(musicBackend==='track'){backgroundMusic.volume=.105;backgroundMusic.play().catch(()=>startSynthesis())}
+  if(musicBackend==='track'){backgroundMusic.volume=.10;backgroundMusic.play().catch(()=>startSynthesis())}
   else if(musicBackend==='synth'&&soundMaster&&soundContext)soundMaster.gain.setTargetAtTime(.22,soundContext.currentTime,.25);
 }
 sonyaVideoElement.addEventListener('play',suspendMusicForVideo);
@@ -484,6 +484,8 @@ sonyaVideoElement.addEventListener('pause',resumeMusicAfterVideo);
 sonyaVideoElement.addEventListener('ended',resumeMusicAfterVideo);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)suspendMusicForVideo();else resumeMusicAfterVideo()});
 updateMusicButton();
+// Attempt playback on opening; browsers that block sound will unlock on the first tap.
+try{enableMusic()}catch(e){/* safe fallback: user can tap music button */}
 
 const starLayer=document.getElementById('stars');for(let i=0;i<34;i++){const t=document.createElement('span');t.className='star';t.style.left=((i*73+17)%100)+'%';t.style.top=((i*43+7)%100)+'%';t.style.setProperty('--time',(5+(i%7)*1.4)+'s');t.style.setProperty('--delay',(-i*.7)+'s');starLayer.appendChild(t)}
 function show(id){if(!scenes.includes(id))return;const v=document.getElementById('sonyaVideo');if(id!=='videoScene'&&v&&!v.paused)v.pause();document.getElementById(current).classList.remove('active');document.getElementById(id).classList.add('active');current=id;window.scrollTo(0,0)}
